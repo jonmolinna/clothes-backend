@@ -1,0 +1,20 @@
+Modules
+-----------------------------------
+nest generate module customers
+nest generate controller customers
+nest generate service customers
+
+nest generate module roles
+nest generate controller roles
+nest generate service roles
+
+nest generate module users
+nest generate controller users
+nest generate service users
+
+Install
+---------------------------------
+npm install --save @nestjs/typeorm typeorm mysql2
+npm install class-validator
+npm install class-transformer
+npm i @nestjs/mapped-types
