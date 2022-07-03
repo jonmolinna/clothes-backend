@@ -12,13 +12,18 @@ import { CreateRolesDto } from './dtos/CreateRoles.dto';
 import { UpdateRolesDto } from './dtos/UpdateRoles.dto';
 import { RolesService } from './roles.service';
 
-@Controller('rol')
+@Controller('/api/rol')
 export class RolesController {
   constructor(private readonly rolService: RolesService) {}
 
   @Get()
   async getAllRoles() {
     return await this.rolService.getAllRoles();
+  }
+
+  @Get('/users')
+  async getAllUsersByRoles() {
+    return await this.rolService.getAllUsersByRoles();
   }
 
   @Post()
