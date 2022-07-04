@@ -22,7 +22,7 @@ export class User {
   @Column({ type: 'bool', default: true })
   status: boolean;
 
-  @Column({ type: 'varchar', length: 100 })
+  @Column({ type: 'varchar', length: 250 })
   password: string;
 
   @CreateDateColumn({ type: 'timestamp', name: 'created_at' })

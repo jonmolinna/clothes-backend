@@ -5,6 +5,7 @@ import { AppService } from './app.service';
 import { CustomersModule } from './customers/customers.module';
 import { RolesModule } from './roles/roles.module';
 import { UsersModule } from './users/users.module';
+import { CategoryModule } from './category/category.module';
 import entities from './entities/';
 
 @Module({
@@ -23,6 +24,7 @@ import entities from './entities/';
     }),
     RolesModule,
     UsersModule,
+    CategoryModule,
   ],
   controllers: [AppController],
   providers: [AppService],

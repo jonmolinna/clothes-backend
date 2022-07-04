@@ -12,26 +12,15 @@ nest generate module users
 nest generate controller users
 nest generate service users
 
+nest generate module category
+nest generate controller category
+nest generate service category
+
 Install
 ---------------------------------
 npm install --save @nestjs/typeorm typeorm mysql2
 npm install class-validator
 npm install class-transformer
 npm i @nestjs/mapped-types
-
-
-
-async createUser(dto: CreateUserDto) {
-    const user = this.userRepository.create({
-      name: dto.name,
-      username: dto.username,
-      status: dto.status,
-      password: dto.password,
-      role: {
-        id: dto.role_id,
-      },
-    });
-    console.log('USER', user);
-    console.log('>>>', dto);
-    return await this.userRepository.save(user);
-  }
+npm i bcrypt
+npm i @types/bcrypt -D
