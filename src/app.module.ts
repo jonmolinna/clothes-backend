@@ -6,6 +6,8 @@ import { CustomersModule } from './customers/customers.module';
 import { RolesModule } from './roles/roles.module';
 import { UsersModule } from './users/users.module';
 import { CategoryModule } from './category/category.module';
+import { GenderModule } from './gender/gender.module';
+import { SizeModule } from './size/size.module';
 import entities from './entities/';
 
 @Module({
@@ -25,6 +27,8 @@ import entities from './entities/';
     RolesModule,
     UsersModule,
     CategoryModule,
+    GenderModule,
+    SizeModule,
   ],
   controllers: [AppController],
   providers: [AppService],
