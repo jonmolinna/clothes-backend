@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Color } from 'src/entities';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { CreateColorDto } from './dto/CreateColor.dto';
 import { UpdateColorDto } from './dto/UpdateColor.dto';
 
@@ -47,5 +47,9 @@ export class ColorsService {
     } else {
       throw new HttpException('Color Eliminado', HttpStatus.OK);
     }
+  }
+
+  async getColorsByIds(ids: number[]) {
+    return await this.colorRepository.findBy({ id: In(ids) });
   }
 }

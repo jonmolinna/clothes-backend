@@ -47,4 +47,8 @@ export class GenderService {
       throw new HttpException('Género eliminado', HttpStatus.OK);
     }
   }
+
+  async getGenderById(id: number): Promise<Gender> {
+    return await this.genderRepository.findOne({ where: { id } });
+  }
 }

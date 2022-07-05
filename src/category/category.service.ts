@@ -48,4 +48,8 @@ export class CategoryService {
       throw new HttpException('Categoria eliminado', HttpStatus.OK);
     }
   }
+
+  async getCategoryById(id: number): Promise<Category> {
+    return await this.categoryRepository.findOne({ where: { id } });
+  }
 }

@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Size } from 'src/entities';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { CreateSizeDto } from './dto/CreateSize.dto';
 import { UpdateSizeDto } from './dto/UpdateSize';
 
@@ -45,5 +45,9 @@ export class SizeService {
     } else {
       throw new HttpException('Talla eliminado', HttpStatus.OK);
     }
+  }
+
+  async getSizesByIds(ids: number[]) {
+    return await this.sizeRepository.findBy({ id: In(ids) });
   }
 }

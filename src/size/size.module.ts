@@ -8,5 +8,6 @@ import { SizeService } from './size.service';
   imports: [TypeOrmModule.forFeature([Size])],
   controllers: [SizeController],
   providers: [SizeService],
+  exports: [SizeService],
 })
 export class SizeModule {}
