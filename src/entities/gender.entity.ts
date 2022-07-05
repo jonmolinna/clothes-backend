@@ -2,8 +2,10 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { Product } from './product.entity';
 
 @Entity({ name: 'gender' })
 export class Gender {
@@ -15,4 +17,7 @@ export class Gender {
 
   @CreateDateColumn({ type: 'timestamp', name: 'created_at' })
   createdAt: Date;
+
+  @OneToMany(() => Product, (product) => product.gender)
+  products: Product[];
 }

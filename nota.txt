@@ -24,6 +24,14 @@ nest generate module size
 nest generate controller size
 nest generate service size
 
+nest generate module colors
+nest generate controller colors
+nest generate service colors
+
+nest generate module product
+nest generate controller product
+nest generate service product
+
 Install
 ---------------------------------
 npm install --save @nestjs/typeorm typeorm mysql2

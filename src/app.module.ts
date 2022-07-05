@@ -8,6 +8,8 @@ import { UsersModule } from './users/users.module';
 import { CategoryModule } from './category/category.module';
 import { GenderModule } from './gender/gender.module';
 import { SizeModule } from './size/size.module';
+import { ProductModule } from './product/product.module';
+import { ColorsModule } from './colors/colors.module';
 import entities from './entities/';
 
 @Module({
@@ -29,6 +31,8 @@ import entities from './entities/';
     CategoryModule,
     GenderModule,
     SizeModule,
+    ProductModule,
+    ColorsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

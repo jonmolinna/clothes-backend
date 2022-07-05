@@ -2,8 +2,10 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  ManyToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { Product } from './product.entity';
 
 @Entity({ name: 'size' })
 export class Size {
@@ -15,4 +17,7 @@ export class Size {
 
   @CreateDateColumn({ type: 'timestamp', name: 'created_at' })
   createdAt: Date;
+
+  @ManyToMany(() => Product, (product) => product.size)
+  products: Product[];
 }
