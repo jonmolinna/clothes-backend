@@ -11,6 +11,7 @@ import { ProductService } from 'src/product/product.service';
 import { SizeService } from 'src/size/size.service';
 import { Repository } from 'typeorm';
 import { CreateDetailProductDto } from './dto/CreateDetailProduct.dto';
+import { UpdateDetailProductDto } from './dto/UpdateDetailProduct.dto';
 
 @Injectable()
 export class DetailProductService {
@@ -22,7 +23,16 @@ export class DetailProductService {
     private readonly colorService: ColorsService,
   ) {}
 
-  async createDetailProduct(dto: CreateDetailProductDto) {
+  async getOneDetailProductById(id: number): Promise<DetailProduct> {
+    return await this.detailProductRepository.findOne({
+      where: { id },
+      relations: ['product', 'color', 'size'],
+    });
+  }
+
+  async createDetailProduct(
+    dto: CreateDetailProductDto,
+  ): Promise<DetailProduct> {
     const product = await this.productService.getProductById(dto.productId);
     if (!product) throw new NotFoundException('No se encontro el producto');
 
@@ -50,7 +60,55 @@ export class DetailProductService {
     return this.detailProductRepository.save(newDetailProduct);
   }
 
-  async getAllDetailProducts() {
-    return await this.detailProductRepository.find();
+  async getAllDetailProducts(): Promise<DetailProduct[]> {
+    return await this.detailProductRepository.find({
+      relations: ['product', 'color', 'size'],
+    });
+  }
+
+  async updateDetailProducts(
+    id: number,
+    dto: UpdateDetailProductDto,
+  ): Promise<DetailProduct> {
+    const detailProduct = await this.getOneDetailProductById(id);
+    if (!detailProduct) {
+      throw new NotFoundException('No se encontro el detalle del producto');
+    }
+
+    const product = await this.productService.getProductById(dto.productId);
+    if (!product) throw new NotFoundException('No se encontro el producto');
+
+    const productSizeId = product.sizes.find((size) => size.id === dto.sizeId);
+    if (!productSizeId) throw new NotFoundException('Ingrese una talla válida');
+
+    const productColorId = product.colors.find(
+      (color) => color.id === dto.colorId,
+    );
+    if (!productColorId) throw new NotFoundException('Ingrese un color válido');
+
+    const size = await this.sizeService.getOneSizeById(productSizeId.id);
+    if (!size) throw new NotFoundException('No se encontro la talla');
+
+    const color = await this.colorService.getOneColorById(productColorId.id);
+    if (!color) throw new NotFoundException('No se encontro el color');
+
+    const editDetailProduct = Object.assign(detailProduct, {
+      stock: dto.stock,
+      status: dto.status,
+      product: product,
+      size: size,
+      color: color,
+    });
+
+    return this.detailProductRepository.save(editDetailProduct);
+  }
+
+  async deleteDetailProduct(id: number) {
+    const detailProduct = await this.detailProductRepository.delete(id);
+    if (detailProduct.affected === 0) {
+      throw new NotFoundException('No se encontro el detalle del producto');
+    } else {
+      throw new HttpException('Detalle del producto eleminado', HttpStatus.OK);
+    }
   }
 }
