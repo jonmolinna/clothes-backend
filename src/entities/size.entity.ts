@@ -3,8 +3,10 @@ import {
   CreateDateColumn,
   Entity,
   ManyToMany,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { DetailProduct } from './detail_product.entity';
 import { Product } from './product.entity';
 
 @Entity({ name: 'size' })
@@ -18,6 +20,9 @@ export class Size {
   @CreateDateColumn({ type: 'timestamp', name: 'created_at' })
   createdAt: Date;
 
-  @ManyToMany(() => Product, (product) => product.size)
+  @ManyToMany(() => Product, (product) => product.sizes)
   products: Product[];
+
+  @OneToMany(() => DetailProduct, (detailProduct) => detailProduct.size)
+  detailProducts: DetailProduct[];
 }

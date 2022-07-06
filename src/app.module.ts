@@ -10,6 +10,7 @@ import { GenderModule } from './gender/gender.module';
 import { SizeModule } from './size/size.module';
 import { ProductModule } from './product/product.module';
 import { ColorsModule } from './colors/colors.module';
+import { DetailProductModule } from './detail_product/detail_product.module';
 import entities from './entities/';
 
 @Module({
@@ -33,6 +34,7 @@ import entities from './entities/';
     SizeModule,
     ProductModule,
     ColorsModule,
+    DetailProductModule,
   ],
   controllers: [AppController],
   providers: [AppService],

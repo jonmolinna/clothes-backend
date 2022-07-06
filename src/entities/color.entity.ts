@@ -3,8 +3,10 @@ import {
   CreateDateColumn,
   Entity,
   ManyToMany,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { DetailProduct } from './detail_product.entity';
 import { Product } from './product.entity';
 
 @Entity({ name: 'color' })
@@ -20,4 +22,7 @@ export class Color {
 
   @ManyToMany(() => Product, (product) => product.colors)
   products: Product[];
+
+  @OneToMany(() => DetailProduct, (detailProduct) => detailProduct.color)
+  detailProducts: DetailProduct[];
 }

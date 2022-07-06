@@ -17,15 +17,23 @@ export class ColorsService {
     private readonly colorRepository: Repository<Color>,
   ) {}
 
-  async createCategory(dto: CreateColorDto): Promise<Color> {
-    const newColor = new Color();
-    newColor.name = dto.name.trim().toLocaleLowerCase();
+  async getOneColorById(id: number): Promise<Color> {
+    return await this.colorRepository.findOne({ where: { id } });
+  }
 
-    return this.colorRepository.save(newColor);
+  async getColorsByIds(ids: number[]): Promise<Color[]> {
+    return await this.colorRepository.findBy({ id: In(ids) });
   }
 
   async getAllColors(): Promise<Color[]> {
     return await this.colorRepository.find();
+  }
+
+  async createColor(dto: CreateColorDto): Promise<Color> {
+    const newColor = new Color();
+    newColor.name = dto.name.trim().toLocaleLowerCase();
+
+    return this.colorRepository.save(newColor);
   }
 
   async updateColor(id: number, dto: UpdateColorDto): Promise<Color> {
@@ -47,9 +55,5 @@ export class ColorsService {
     } else {
       throw new HttpException('Color Eliminado', HttpStatus.OK);
     }
-  }
-
-  async getColorsByIds(ids: number[]) {
-    return await this.colorRepository.findBy({ id: In(ids) });
   }
 }

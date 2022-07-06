@@ -6,10 +6,12 @@ import {
   JoinTable,
   ManyToMany,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Color, Size } from '.';
 import { Category } from './category.entity';
+import { DetailProduct } from './detail_product.entity';
 import { Gender } from './gender.entity';
 
 @Entity({ name: 'product' })
@@ -57,5 +59,8 @@ export class Product {
     joinColumn: { name: 'product_id' },
     inverseJoinColumn: { name: 'size_id' },
   })
-  size: Size[];
+  sizes: Size[];
+
+  @OneToMany(() => DetailProduct, (detailProduct) => detailProduct.product)
+  detailProducts: DetailProduct[];
 }

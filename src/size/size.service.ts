@@ -16,15 +16,23 @@ export class SizeService {
     @InjectRepository(Size) private readonly sizeRepository: Repository<Size>,
   ) {}
 
+  async getOneSizeById(id: number): Promise<Size> {
+    return await this.sizeRepository.findOne({ where: { id } });
+  }
+
+  async getSizesByIds(ids: number[]): Promise<Size[]> {
+    return await this.sizeRepository.findBy({ id: In(ids) });
+  }
+
+  async getAllSize(): Promise<Size[]> {
+    return await this.sizeRepository.find();
+  }
+
   async createSize(dto: CreateSizeDto): Promise<Size> {
     const newSize = new Size();
     newSize.name = dto.name.trim().toLocaleLowerCase();
 
     return this.sizeRepository.save(newSize);
-  }
-
-  async getAllSize(): Promise<Size[]> {
-    return await this.sizeRepository.find();
   }
 
   async updateSize(id: number, dto: UpdateSizeDto) {
@@ -45,9 +53,5 @@ export class SizeService {
     } else {
       throw new HttpException('Talla eliminado', HttpStatus.OK);
     }
-  }
-
-  async getSizesByIds(ids: number[]) {
-    return await this.sizeRepository.findBy({ id: In(ids) });
   }
 }

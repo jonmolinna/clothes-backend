@@ -18,7 +18,7 @@ export class ColorsController {
 
   @Post()
   async createColor(@Body() dto: CreateColorDto) {
-    return this.colorService.createCategory(dto);
+    return this.colorService.createColor(dto);
   }
 
   @Get()

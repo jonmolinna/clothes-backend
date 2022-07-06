@@ -6,9 +6,30 @@ import { Gender } from './gender.entity';
 import { Size } from './size.entity';
 import { Color } from './color.entity';
 import { Product } from './product.entity';
+import { DetailProduct } from './detail_product.entity';
 
-const entities = [Customer, Role, User, Category, Gender, Size, Color, Product];
+const entities = [
+  Customer,
+  Role,
+  User,
+  Category,
+  Gender,
+  Size,
+  Color,
+  Product,
+  DetailProduct,
+];
 
-export { Customer, Role, User, Category, Gender, Size, Color, Product };
+export {
+  Customer,
+  Role,
+  User,
+  Category,
+  Gender,
+  Size,
+  Color,
+  Product,
+  DetailProduct,
+};
 
 export default entities;

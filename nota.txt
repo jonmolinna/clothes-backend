@@ -32,6 +32,10 @@ nest generate module product
 nest generate controller product
 nest generate service product
 
+nest generate module detail_product
+nest generate controller detail_product
+nest generate service detail_product
+
 Install
 ---------------------------------
 npm install --save @nestjs/typeorm typeorm mysql2

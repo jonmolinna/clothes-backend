@@ -21,7 +21,10 @@ export class ProductService {
   ) {}
 
   async getProductById(id: number) {
-    return await this.productRepository.findOne({ where: { id } });
+    return await this.productRepository.findOne({
+      where: { id },
+      relations: ['category', 'gender', 'colors', 'sizes'],
+    });
   }
 
   async createProduct(dto: CreateProductDto): Promise<Product> {
@@ -49,7 +52,7 @@ export class ProductService {
     newProduct.description = dto.description.trim();
     newProduct.category = category;
     newProduct.gender = gender;
-    newProduct.size = sizes;
+    newProduct.sizes = sizes;
     newProduct.colors = colors;
 
     return this.productRepository.save(newProduct);

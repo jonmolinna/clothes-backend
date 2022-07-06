@@ -18,5 +18,6 @@ import { ColorsModule } from 'src/colors/colors.module';
   ],
   controllers: [ProductController],
   providers: [ProductService],
+  exports: [ProductService],
 })
 export class ProductModule {}
