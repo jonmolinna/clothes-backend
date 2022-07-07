@@ -4,9 +4,11 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Color } from './color.entity';
+import { DetailSale } from './detail_sales.entity';
 import { Product } from './product.entity';
 import { Size } from './size.entity';
 
@@ -35,4 +37,7 @@ export class DetailProduct {
   @ManyToOne(() => Size)
   @JoinColumn({ name: 'size_id' })
   size: Size;
+
+  @OneToMany(() => DetailSale, (detailSale) => detailSale.detailProduct)
+  detailSales: DetailSale[];
 }

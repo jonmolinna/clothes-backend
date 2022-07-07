@@ -11,6 +11,8 @@ import { SizeModule } from './size/size.module';
 import { ProductModule } from './product/product.module';
 import { ColorsModule } from './colors/colors.module';
 import { DetailProductModule } from './detail_product/detail_product.module';
+import { SalesModule } from './sales/sales.module';
+import { DetailSalesModule } from './detail_sales/detail_sales.module';
 import entities from './entities/';
 
 @Module({
@@ -35,6 +37,8 @@ import entities from './entities/';
     ProductModule,
     ColorsModule,
     DetailProductModule,
+    SalesModule,
+    DetailSalesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

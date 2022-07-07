@@ -2,8 +2,10 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { Sale } from './sales.entity';
 
 @Entity({ name: 'customers' })
 export class Customer {
@@ -18,4 +20,7 @@ export class Customer {
 
   @CreateDateColumn({ type: 'timestamp', name: 'created_at' })
   createdAt: Date;
+
+  @OneToMany(() => Sale, (sale) => sale.customer, { cascade: true })
+  sales: Sale[];
 }
