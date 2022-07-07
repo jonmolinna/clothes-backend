@@ -7,9 +7,6 @@ export class CreateDetailSalesDto {
   quantity: number;
 
   @IsNumber()
-  unitPrice: number;
-
-  @IsNumber()
   @IsPositive({ message: 'Ingrese el codigo de la venta válido' })
   saleId: number;
 

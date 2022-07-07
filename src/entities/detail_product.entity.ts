@@ -17,7 +17,7 @@ export class DetailProduct {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: 'numeric', default: 0 })
+  @Column({ type: 'int', default: 0 })
   stock: number;
 
   @Column({ type: 'bool', default: true })

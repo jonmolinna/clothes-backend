@@ -30,6 +30,12 @@ export class DetailProductService {
     });
   }
 
+  async getAllDetailProducts(): Promise<DetailProduct[]> {
+    return await this.detailProductRepository.find({
+      relations: ['product', 'color', 'size'],
+    });
+  }
+
   async createDetailProduct(
     dto: CreateDetailProductDto,
   ): Promise<DetailProduct> {
@@ -58,12 +64,6 @@ export class DetailProductService {
     newDetailProduct.color = color;
 
     return this.detailProductRepository.save(newDetailProduct);
-  }
-
-  async getAllDetailProducts(): Promise<DetailProduct[]> {
-    return await this.detailProductRepository.find({
-      relations: ['product', 'color', 'size'],
-    });
   }
 
   async updateDetailProducts(

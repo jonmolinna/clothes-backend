@@ -52,3 +52,5 @@ npm install class-transformer
 npm i @nestjs/mapped-types
 npm i bcrypt
 npm i @types/bcrypt -D
+npm i uuid
+npm i @types/uuid

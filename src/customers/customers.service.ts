@@ -17,13 +17,17 @@ export class CustomersService {
     private readonly customerRepository: Repository<Customer>,
   ) {}
 
-  async createCustomer(dto: CreateCustomerDto): Promise<Customer> {
-    const customer = this.customerRepository.create(dto);
-    return await this.customerRepository.save(customer);
+  async getOneCustomerById(id: number): Promise<Customer> {
+    return await this.customerRepository.findOne({ where: { id } });
   }
 
   async getAllCustomers(): Promise<Customer[]> {
     return await this.customerRepository.find();
+  }
+
+  async createCustomer(dto: CreateCustomerDto): Promise<Customer> {
+    const customer = this.customerRepository.create(dto);
+    return await this.customerRepository.save(customer);
   }
 
   async updateCustomer(
@@ -39,9 +43,9 @@ export class CustomersService {
   async deleteCustomer(id: number) {
     const customer = await this.customerRepository.delete(id);
     if (customer.affected === 0) {
-      throw new HttpException('Customer not found', HttpStatus.NOT_FOUND);
+      throw new NotFoundException('No se encontro el cliente');
     } else {
-      return new HttpException('Customer deleted', HttpStatus.OK);
+      return new HttpException('Se elimino el cliente', HttpStatus.OK);
     }
   }
 }

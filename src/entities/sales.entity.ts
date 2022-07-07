@@ -22,8 +22,8 @@ export class Sale {
   @Column({ type: 'bool', default: true })
   status: boolean;
 
-  @Column({ type: 'numeric' })
-  serialNumber: number;
+  @Column({ type: 'uuid' })
+  serialNumber: string;
 
   @ManyToOne(() => User, (user) => user.sales)
   @JoinColumn({ name: 'user_id' })

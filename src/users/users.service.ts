@@ -18,6 +18,17 @@ export class UsersService {
     @InjectRepository(Role) private readonly roleRepository: Repository<Role>,
   ) {}
 
+  async getOneUserById(id: number): Promise<User> {
+    return await this.userRepository.findOne({
+      where: { id },
+      relations: ['role'],
+    });
+  }
+
+  async getAllUsers(): Promise<User[]> {
+    return await this.userRepository.find({ relations: ['role'] });
+  }
+
   async createUser(dto: CreateUserDto): Promise<User> {
     const role = await this.roleRepository.findOne({
       where: { id: dto.roleId },
@@ -46,10 +57,6 @@ export class UsersService {
     newUser.role = role;
 
     return this.userRepository.save(newUser);
-  }
-
-  async getAllUsers(): Promise<User[]> {
-    return await this.userRepository.find({ relations: ['role'] });
   }
 
   async deleteUserById(id: number) {
