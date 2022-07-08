@@ -13,6 +13,7 @@ import { ColorsModule } from './colors/colors.module';
 import { DetailProductModule } from './detail_product/detail_product.module';
 import { SalesModule } from './sales/sales.module';
 import { DetailSalesModule } from './detail_sales/detail_sales.module';
+import { AuthModule } from './auth/auth.module';
 import entities from './entities/';
 
 @Module({
@@ -39,6 +40,7 @@ import entities from './entities/';
     DetailProductModule,
     SalesModule,
     DetailSalesModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -7,7 +7,10 @@ import {
   ParseIntPipe,
   Post,
   Put,
+  UseGuards,
 } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
+import { GetUser } from 'src/auth/decorators/user.decorator';
 import { CreateUserDto } from './dtos/CreateUser.dto';
 import { UpdateUserDto } from './dtos/UpdateUser.dto';
 import { UsersService } from './users.service';
@@ -22,7 +25,8 @@ export class UsersController {
   }
 
   @Get()
-  async getAllUser() {
+  @UseGuards(AuthGuard())
+  async getAllUser(@GetUser() user) {
     return await this.userService.getAllUsers();
   }
 

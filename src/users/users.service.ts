@@ -25,11 +25,26 @@ export class UsersService {
     });
   }
 
+  async getOneUserByUsername(username: string): Promise<User> {
+    return await this.userRepository.findOne({
+      where: { username },
+      relations: ['role'],
+    });
+  }
+
   async getAllUsers(): Promise<User[]> {
     return await this.userRepository.find({ relations: ['role'] });
   }
 
   async createUser(dto: CreateUserDto): Promise<User> {
+    const usernameRegex = /^[a-zA-Z0-9]+([._]?[a-zA-Z0-9]+)*$/;
+    if (!dto.username.match(usernameRegex)) {
+      throw new HttpException(
+        'Ingrese un usuario válido',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+
     const role = await this.roleRepository.findOne({
       where: { id: dto.roleId },
     });
@@ -41,10 +56,7 @@ export class UsersService {
     });
 
     if (user) {
-      throw new HttpException(
-        'El valor del usuario ya existe',
-        HttpStatus.BAD_REQUEST,
-      );
+      throw new HttpException('El usuario ya existe', HttpStatus.BAD_REQUEST);
     }
 
     const passwordHash = encodePassword(dto.password);

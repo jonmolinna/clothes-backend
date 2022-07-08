@@ -1,49 +1,3 @@
-Modules
------------------------------------
-nest generate module customers
-nest generate controller customers
-nest generate service customers
-
-nest generate module roles
-nest generate controller roles
-nest generate service roles
-
-nest generate module users
-nest generate controller users
-nest generate service users
-
-nest generate module category
-nest generate controller category
-nest generate service category
-
-nest generate module gender
-nest generate controller gender
-nest generate service gender
-
-nest generate module size
-nest generate controller size
-nest generate service size
-
-nest generate module colors
-nest generate controller colors
-nest generate service colors
-
-nest generate module product
-nest generate controller product
-nest generate service product
-
-nest generate module detail_product
-nest generate controller detail_product
-nest generate service detail_product
-
-nest generate module sales
-nest generate controller sales
-nest generate service sales
-
-nest generate module detail_sales
-nest generate controller detail_sales
-nest generate service detail_sales
-
 Install
 ---------------------------------
 npm install --save @nestjs/typeorm typeorm mysql2
@@ -54,3 +8,11 @@ npm i bcrypt
 npm i @types/bcrypt -D
 npm i uuid
 npm i @types/uuid
+
+npm install --save @nestjs/passport passport passport-local
+npm install --save-dev @types/passport-local
+npm install @nestjs/jwt
+npm install passport-jwt
+npm install @types/passport-jwt -D
+
+@InjectRepository => importar
