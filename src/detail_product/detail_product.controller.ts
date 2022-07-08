@@ -31,7 +31,7 @@ export class DetailProductController {
     @Param('id', ParseIntPipe) id: number,
     @Body() dto: UpdateDetailProductDto,
   ) {
-    return this.detailProductService.updateDetailProducts(id, dto);
+    return this.detailProductService.updateDetailProduct(id, dto);
   }
 
   @Delete('/:id')

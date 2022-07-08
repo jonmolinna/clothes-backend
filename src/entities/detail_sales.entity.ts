@@ -14,7 +14,7 @@ export class DetailSale {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: 'numeric', default: 0, name: 'quantity' })
+  @Column({ type: 'int', default: 0, name: 'quantity' })
   quantity: number;
 
   @Column({

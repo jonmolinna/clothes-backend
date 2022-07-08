@@ -36,6 +36,38 @@ export class DetailProductService {
     });
   }
 
+  async updateSubtractStockById(
+    id: number,
+    quantityProduct: number,
+  ): Promise<DetailProduct> {
+    const detailProduct = await this.getOneDetailProductById(id);
+    if (!detailProduct) {
+      throw new NotFoundException('No se encontro el detalle del producto');
+    }
+
+    const editDetailProductByStock = Object.assign(detailProduct, {
+      stock: detailProduct.stock - quantityProduct,
+    });
+
+    return this.detailProductRepository.save(editDetailProductByStock);
+  }
+
+  async updateAddStockById(
+    id: number,
+    quantityProduct: number,
+  ): Promise<DetailProduct> {
+    const detailProduct = await this.getOneDetailProductById(id);
+    if (!detailProduct) {
+      throw new NotFoundException('No se encontro el detalle del producto');
+    }
+
+    const editDetailProductByStock = Object.assign(detailProduct, {
+      stock: detailProduct.stock + quantityProduct,
+    });
+
+    return this.detailProductRepository.save(editDetailProductByStock);
+  }
+
   async createDetailProduct(
     dto: CreateDetailProductDto,
   ): Promise<DetailProduct> {
@@ -66,7 +98,7 @@ export class DetailProductService {
     return this.detailProductRepository.save(newDetailProduct);
   }
 
-  async updateDetailProducts(
+  async updateDetailProduct(
     id: number,
     dto: UpdateDetailProductDto,
   ): Promise<DetailProduct> {
