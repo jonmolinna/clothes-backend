@@ -28,7 +28,7 @@ export class RolesController {
 
   @Post()
   async createRol(@Body() dto: CreateRolesDto) {
-    return await this.rolService.createRol(dto);
+    return await this.rolService.createRole(dto);
   }
 
   @Put('/:id')
@@ -36,7 +36,7 @@ export class RolesController {
     @Param('id', ParseIntPipe) id: number,
     @Body() dto: UpdateRolesDto,
   ) {
-    return this.rolService.updateRol(id, dto);
+    return this.rolService.updateRole(id, dto);
   }
 
   @Delete('/:id')

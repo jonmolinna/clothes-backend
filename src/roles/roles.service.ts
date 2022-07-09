@@ -16,6 +16,10 @@ export class RolesService {
     @InjectRepository(Role) private readonly rolRepository: Repository<Role>,
   ) {}
 
+  async getOneRoleById(id: number): Promise<Role> {
+    return await this.rolRepository.findOne({ where: { id } });
+  }
+
   async getAllRoles(): Promise<Role[]> {
     return await this.rolRepository.find();
   }
@@ -24,15 +28,21 @@ export class RolesService {
     return await this.rolRepository.find({ relations: ['users'] });
   }
 
-  async createRol(dto: CreateRolesDto): Promise<Role> {
-    const rol = this.rolRepository.create(dto);
-    console.log('YOOO', rol);
-    return await this.rolRepository.save(rol);
+  async isAdminRole(id: number): Promise<boolean> {
+    const role = await this.getOneRoleById(id);
+    return role.name === 'admin';
   }
 
-  async updateRol(id: number, dto: UpdateRolesDto): Promise<Role | any> {
+  async createRole(dto: CreateRolesDto): Promise<Role> {
+    const newRole = new Role();
+    newRole.name = dto.name.trim().toLocaleLowerCase();
+
+    return await this.rolRepository.save(newRole);
+  }
+
+  async updateRole(id: number, dto: UpdateRolesDto): Promise<Role | any> {
     const rol = await this.rolRepository.findOne({ where: { id } });
-    if (!rol) throw new NotFoundException('Rol not found');
+    if (!rol) throw new NotFoundException('No se encontro el rol');
     const rolEdit = Object.assign(rol, dto);
     return await this.rolRepository.save(rolEdit);
   }

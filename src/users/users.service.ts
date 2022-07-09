@@ -1,12 +1,16 @@
 import {
+  BadRequestException,
   HttpException,
   HttpStatus,
   Injectable,
   NotFoundException,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { User, Role } from 'src/entities/';
+import { User } from 'src/entities/';
+import { RolesService } from 'src/roles/roles.service';
 import { encodePassword } from 'src/utils/bcrypt';
+import { isUsernameValid } from 'src/utils/UsernameValid';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from './dtos/CreateUser.dto';
 import { UpdateUserDto } from './dtos/UpdateUser.dto';
@@ -15,7 +19,7 @@ import { UpdateUserDto } from './dtos/UpdateUser.dto';
 export class UsersService {
   constructor(
     @InjectRepository(User) private readonly userRepository: Repository<User>,
-    @InjectRepository(Role) private readonly roleRepository: Repository<Role>,
+    private readonly roleService: RolesService,
   ) {}
 
   async getOneUserById(id: number): Promise<User> {
@@ -36,28 +40,19 @@ export class UsersService {
     return await this.userRepository.find({ relations: ['role'] });
   }
 
-  async createUser(dto: CreateUserDto): Promise<User> {
-    const usernameRegex = /^[a-zA-Z0-9]+([._]?[a-zA-Z0-9]+)*$/;
-    if (!dto.username.match(usernameRegex)) {
-      throw new HttpException(
-        'Ingrese un usuario válido',
-        HttpStatus.BAD_REQUEST,
-      );
+  async createUser(dto: CreateUserDto, auth): Promise<User> {
+    const isAdmin = await this.roleService.isAdminRole(auth.role.id);
+    if (!isAdmin) throw new UnauthorizedException('No tienes permisos');
+
+    if (!isUsernameValid(dto.username)) {
+      throw new BadRequestException('Ingrese un usuario válido');
     }
 
-    const role = await this.roleRepository.findOne({
-      where: { id: dto.roleId },
-    });
-
+    const role = await this.roleService.getOneRoleById(dto.roleId);
     if (!role) throw new NotFoundException('No se encontro el rol');
 
-    const user = await this.userRepository.findOne({
-      where: { username: dto.username },
-    });
-
-    if (user) {
-      throw new HttpException('El usuario ya existe', HttpStatus.BAD_REQUEST);
-    }
+    const user = await this.getOneUserByUsername(dto.username);
+    if (user) throw new BadRequestException('El usuario ya existe');
 
     const passwordHash = encodePassword(dto.password);
 
@@ -84,10 +79,7 @@ export class UsersService {
     const user = await this.userRepository.findOne({ where: { id } });
     if (!user) throw new NotFoundException('No se encontro el usuario ');
 
-    const role = await this.roleRepository.findOne({
-      where: { id: dto.roleId },
-    });
-
+    const role = await this.roleService.getOneRoleById(dto.roleId);
     if (!role) throw new NotFoundException('No se encontro el rol');
 
     const editUser = Object.assign(user, {
