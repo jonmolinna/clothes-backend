@@ -31,19 +31,16 @@ export class UsersService {
 
   async getOneUserByUsername(username: string): Promise<User> {
     return await this.userRepository.findOne({
-      where: { username },
+      where: { username, status: true },
       relations: ['role'],
     });
   }
 
   async getAllUsers(): Promise<User[]> {
-    return await this.userRepository.find({ relations: ['role'] });
+    return await this.userRepository.find();
   }
 
-  async createUser(dto: CreateUserDto, auth): Promise<User> {
-    const isAdmin = await this.roleService.isAdminRole(auth.role.id);
-    if (!isAdmin) throw new UnauthorizedException('No tienes permisos');
-
+  async createUser(dto: CreateUserDto): Promise<User> {
     if (!isUsernameValid(dto.username)) {
       throw new BadRequestException('Ingrese un usuario válido');
     }
@@ -83,9 +80,9 @@ export class UsersService {
     if (!role) throw new NotFoundException('No se encontro el rol');
 
     const editUser = Object.assign(user, {
-      name: dto.name.trim().toLowerCase() || user.name,
+      name: dto.name.trim().toLowerCase(),
       status: dto.status,
-      role: role || user.role,
+      role: role,
     });
 
     return this.userRepository.save(editUser);

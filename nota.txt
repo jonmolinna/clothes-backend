@@ -14,5 +14,6 @@ npm install --save-dev @types/passport-local
 npm install @nestjs/jwt
 npm install passport-jwt
 npm install @types/passport-jwt -D
+npm install nest-access-control
 
 @InjectRepository => importar
