@@ -7,6 +7,7 @@ import { CategoryModule } from 'src/category/category.module';
 import { GenderModule } from 'src/gender/gender.module';
 import { SizeModule } from 'src/size/size.module';
 import { ColorsModule } from 'src/colors/colors.module';
+import { PassportModule } from '@nestjs/passport';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { ColorsModule } from 'src/colors/colors.module';
     GenderModule,
     SizeModule,
     ColorsModule,
+    PassportModule.register({ defaultStrategy: 'jwt' }),
   ],
   controllers: [ProductController],
   providers: [ProductService],

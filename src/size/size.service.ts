@@ -39,7 +39,7 @@ export class SizeService {
     const size = await this.sizeRepository.findOne({ where: { id } });
 
     const editSize = Object.assign(size, {
-      name: dto.name.trim().toLocaleLowerCase() || size.name,
+      name: dto.name.trim().toLocaleLowerCase(),
     });
 
     return this.sizeRepository.save(editSize);

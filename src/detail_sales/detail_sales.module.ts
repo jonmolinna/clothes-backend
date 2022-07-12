@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { PassportModule } from '@nestjs/passport';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DetailProductModule } from 'src/detail_product/detail_product.module';
 import { DetailSale } from 'src/entities';
@@ -9,6 +10,7 @@ import { DetailSalesService } from './detail_sales.service';
 @Module({
   imports: [
     TypeOrmModule.forFeature([DetailSale]),
+    PassportModule.register({ defaultStrategy: 'jwt' }),
     SalesModule,
     DetailProductModule,
   ],

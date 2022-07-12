@@ -6,10 +6,6 @@ export class CreateSalesDto {
   status: boolean;
 
   @IsNumber()
-  @IsPositive({ message: 'Ingrese el codigo del usuario válido' })
-  userId: number;
-
-  @IsNumber()
   @IsPositive({ message: 'Ingrese el codigo del cliente válido' })
   customerId: number;
 }

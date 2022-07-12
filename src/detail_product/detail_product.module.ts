@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { PassportModule } from '@nestjs/passport';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ColorsModule } from 'src/colors/colors.module';
 import { DetailProduct } from 'src/entities';
@@ -13,6 +14,7 @@ import { DetailProductService } from './detail_product.service';
     ProductModule,
     SizeModule,
     ColorsModule,
+    PassportModule.register({ defaultStrategy: 'jwt' }),
   ],
   controllers: [DetailProductController],
   providers: [DetailProductService],

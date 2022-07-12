@@ -27,6 +27,12 @@ export class ProductService {
     });
   }
 
+  async getAllProducts(): Promise<Product[]> {
+    return await this.productRepository.find({
+      relations: ['category', 'gender', 'colors', 'size'],
+    });
+  }
+
   async createProduct(dto: CreateProductDto): Promise<Product> {
     const category = await this.categoryService.getCategoryById(dto.categoryId);
     if (!category) throw new NotFoundException('No se encuentra la categoria');
@@ -56,12 +62,6 @@ export class ProductService {
     newProduct.colors = colors;
 
     return this.productRepository.save(newProduct);
-  }
-
-  async getAllProducts(): Promise<Product[]> {
-    return await this.productRepository.find({
-      relations: ['category', 'gender', 'colors', 'size'],
-    });
   }
 
   async updateProducts(id: number, dto: UpdateProductDto): Promise<Product> {

@@ -1,5 +1,4 @@
 import {
-  ConsoleLogger,
   HttpException,
   HttpStatus,
   Injectable,
@@ -32,8 +31,8 @@ export class SalesService {
     });
   }
 
-  async createSale(dto: CreateSalesDto): Promise<Sale> {
-    const user = await this.userService.getOneUserById(dto.userId);
+  async createSale(dto: CreateSalesDto, idUser: number): Promise<Sale> {
+    const user = await this.userService.getOneUserById(idUser);
     if (!user) throw new NotFoundException('No cuentas con autorización');
 
     const customer = await this.customerService.getOneCustomerById(
@@ -50,11 +49,11 @@ export class SalesService {
     return this.saleRepository.save(newSale);
   }
 
-  async updateSale(id: number, dto: UpdateSalesDto) {
+  async updateSale(id: number, dto: UpdateSalesDto, idUser: number) {
     const sale = await this.getOneSaleById(id);
     if (!sale) throw new NotFoundException('No se encontro la venta');
 
-    const user = await this.userService.getOneUserById(dto.userId);
+    const user = await this.userService.getOneUserById(idUser);
     if (!user) throw new NotFoundException('No cuentas con autorización');
 
     const customer = await this.customerService.getOneCustomerById(

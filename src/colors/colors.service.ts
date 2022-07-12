@@ -41,7 +41,7 @@ export class ColorsService {
     if (!color) throw new NotFoundException('No se encontro el color');
 
     const editColor = Object.assign(color, {
-      name: dto.name.trim().toLocaleLowerCase() || color.name,
+      name: dto.name.trim().toLocaleLowerCase(),
     });
 
     return this.colorRepository.save(editColor);

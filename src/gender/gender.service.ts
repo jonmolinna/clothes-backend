@@ -17,15 +17,19 @@ export class GenderService {
     private readonly genderRepository: Repository<Gender>,
   ) {}
 
+  async getGenderById(id: number): Promise<Gender> {
+    return await this.genderRepository.findOne({ where: { id } });
+  }
+
+  async getAllGenders(): Promise<Gender[]> {
+    return await this.genderRepository.find();
+  }
+
   async createGender(dto: CreateGenderDto): Promise<Gender> {
     const newGender = new Gender();
     newGender.name = dto.name.trim().toLowerCase();
 
     return this.genderRepository.save(newGender);
-  }
-
-  async getAllGenders(): Promise<Gender[]> {
-    return await this.genderRepository.find();
   }
 
   async updateGender(id: number, dto: UpdateGenderDto): Promise<Gender> {
@@ -46,9 +50,5 @@ export class GenderService {
     } else {
       throw new HttpException('Género eliminado', HttpStatus.OK);
     }
-  }
-
-  async getGenderById(id: number): Promise<Gender> {
-    return await this.genderRepository.findOne({ where: { id } });
   }
 }
